@@ -1,77 +1,51 @@
 import streamlit as st
 
-st.set_page_config(page_title="Learning Centers", layout="centered")
-
-st.title("📚 Affordable Learning Centers in Tamil Nadu")
-st.markdown("Browse and explore classes near you. Search, filter, and explore by category.")
-
-# --- Data ---
-categories = [
-    "Spoken English", "Spoken Hindi", "Abacus",
-    "Typing", "Computer", "Tailoring", "Dance"
-]
+categories = ["Spoken English", "Spoken Hindi", "Abacus", "Typing", "Computer", "Tailoring", "Dance"]
 
 learning_centers = {
     "Spoken English": [
-        {"name": "Pioneer Academy", "address": "Komarapalayam, Tamil Nadu", "rating": 4.9, "detail": "Teaches English, Hindi, typing, computer."},
-        {"name": "Vinayak Spoken English", "address": "Komarapalayam, Tamil Nadu", "rating": 4.9, "detail": "Training for English communication."}
+        {"name": "Saraswathi Spoken English", "address": "Main Rd, Komarapalayam", "rating": 4.7, "detail": "Grammar, Vocabulary, and Communication"},
+        {"name": "Vijay English Academy", "address": "Near Bus Stand, Komarapalayam", "rating": 4.5, "detail": "Spoken English with practice sessions"},
     ],
     "Spoken Hindi": [
-        {"name": "Flora Academy", "address": "1st Floor, SK Dental Hospital Complex, Komarapalayam", "rating": 5.0, "detail": "They teach Hindi in a better way."},
-        {"name": "Vinayak Spoken Hindi", "address": "Komarapalayam, Tamil Nadu", "rating": 4.9, "detail": "Great for learning spoken Hindi."},
-        {"name": "Pioneer Academy", "address": "Komarapalayam, Tamil Nadu", "rating": 4.9, "detail": "Also offers Spoken Hindi."},
-        {"name": "Kathirvel Hindi Tuition", "address": "Near Sriram Maligai Store, West Colony, Vijayathottam, Komarapalayam", "rating": None, "detail": "Spoken Hindi tuition."}
+        {"name": "Friends Hindi Class", "address": "South Street, Komarapalayam", "rating": 4.6, "detail": "Basic to Advanced Hindi"},
+        {"name": "Ravi’s Hindi Tuition", "address": "4th Cross, Namakkal", "rating": 4.4, "detail": "Speaking and writing Hindi"},
     ],
     "Abacus": [
-        {"name": "Pioneer Academy", "address": "Komarapalayam, Tamil Nadu", "rating": 4.9, "detail": "Abacus, TNPSC, silambam, tailoring, typing, computer classes."},
-        {"name": "Indian Abacus Centre", "address": "Karungalpalayam, Erode", "rating": 4.9, "detail": "Offers handwriting, calligraphy, spoken Tamil and English."},
-        {"name": "SIP Abacus", "address": "Gandhiji Street, Kollampalayam, Erode", "rating": 4.9, "detail": "Abacus training for kids."},
-        {"name": "Agam Academy", "address": "Vellusamy Street, Manickampalayam, Erode", "rating": 4.9, "detail": "Abacus and tailoring classes."},
-        {"name": "Golden Buds Abacus Academy", "address": "149/320, Valayakara Street, Erode", "rating": 5.0, "detail": "Expert abacus coaching."}
+        {"name": "Golden Beads Abacus", "address": "MG Road, Komarapalayam", "rating": 4.8, "detail": "Mental math and speed calculation"},
+        {"name": "Kids Brain Abacus", "address": "School St, Komarapalayam", "rating": 4.5, "detail": "Junior and Senior abacus levels"},
     ],
     "Typing": [
-        {"name": "Brilliant Typewriting", "address": "284F, Anangur Road, Opp. Salem Main Road, Komarapalayam", "rating": 4.8, "detail": "English & Tamil typing."},
-        {"name": "Pioneer Academy", "address": "Komarapalayam, Tamil Nadu", "rating": 4.9, "detail": "Typing and other skill classes."}
+        {"name": "Brilliant Typewriting", "address": "Anangur Rd, Komarapalayam", "rating": 4.8, "detail": "Tamil & English typing"},
+        {"name": "Rasi Type Institute", "address": "Old Bus Stand, Komarapalayam", "rating": 4.6, "detail": "Govt typing exam focused"},
     ],
     "Computer": [
-        {"name": "CSC Computer Education", "address": "Vasavi Complex, Nadraja Nagar, Komarapalayam", "rating": 4.8, "detail": "Computer basics to advanced."},
-        {"name": "IFC Infotech Computer Education", "address": "Bus Stand, T.R. Complex, Salem Main Road, Komarapalayam", "rating": 5.0, "detail": "Great for software training."},
-        {"name": "Pioneer Academy", "address": "Komarapalayam, Tamil Nadu", "rating": 4.9, "detail": "Includes computer classes."}
+        {"name": "CSC Computer Education", "address": "Market Rd, Komarapalayam", "rating": 4.7, "detail": "Basic, Tally, DTP, C, C++"},
+        {"name": "Apollo Computer", "address": "New Colony, Komarapalayam", "rating": 4.6, "detail": "MS Office, Web Design"},
     ],
     "Tailoring": [
-        {"name": "Agam Academy", "address": "Vellusamy Street, Manickampalayam, Erode", "rating": 4.9, "detail": "Tailoring classes with abacus."},
-        {"name": "Pioneer Academy", "address": "Komarapalayam, Tamil Nadu", "rating": 4.9, "detail": "Offers tailoring as one of its courses."}
+        {"name": "Agam Tailoring Institute", "address": "Komarapalayam Main Rd", "rating": 4.9, "detail": "Blouse, Chudidar, Aari work"},
+        {"name": "Selvi Tailoring", "address": "East Street, Namakkal", "rating": 4.5, "detail": "Women’s tailoring with kit"},
     ],
     "Dance": [
-        {"name": "Senz X Dance Class", "address": "Pallipalayam-Komarapalayam Road, Apex Colony, Komarapalayam", "rating": 4.8, "detail": "Modern & creative dance training."},
-        {"name": "Maaran Dance Studio", "address": "Salem Main Road, Opp. State Bank of India, Komarapalayam", "rating": 5.0, "detail": "Professional dance coaching."},
-        {"name": "Dance Dreamers", "address": "Opp. Salem Main Road, 294/5, Kongu Finance Upstairs, Near Saravana Theatre, Komarapalayam", "rating": 5.0, "detail": "Energetic youth dance club."}
+        {"name": "Senz X Dance Studio", "address": "Komarapalayam Bus Stand", "rating": 4.8, "detail": "Western & Classical dance"},
+        {"name": "Pranava Dance School", "address": "Near Govt School, Komarapalayam", "rating": 4.7, "detail": "Bharatanatyam, Cinematic"},
     ]
 }
 
-# --- Filters ---
-col1, col2 = st.columns(2)
-with col1:
-    selected_category = st.selectbox("🎯 Choose a category", categories)
-with col2:
-    search_text = st.text_input("🔍 Search by name or address").strip().lower()
+st.title("📚 Affordable Learning Centers")
+st.write("Select a category to see classes:")
 
-# --- Display Centers ---
-if selected_category:
-    results = []
-    for center in learning_centers[selected_category]:
-        if search_text in center['name'].lower() or search_text in center['address'].lower():
-            results.append(center)
+category = st.selectbox("Choose a Category", categories)
 
-    if results:
-        for center in results:
-            st.markdown(f"### 🏫 {center['name']}")
-            st.write(f"📍 Address: {center['address']}")
-            st.write(f"⭐ Rating: {center['rating'] if center['rating'] else 'Not rated'}")
-            st.write(f"📝 {center['detail']}")
-            st.markdown("---")
-    else:
-        st.info("No results found. Try changing your search.")
+if category:
+    centers = learning_centers.get(category, [])
+    for center in centers:
+        st.markdown(f"🏫 **{center['name']}**")
+        st.markdown(f"📍 Address: {center['address']}")
+        st.markdown(f"⭐ Rating: {center['rating']}")
+        st.markdown(f"📝 {center['detail']}")
+        st.markdown("---")
 
 
 
