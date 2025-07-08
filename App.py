@@ -1,51 +1,25 @@
 import streamlit as st
 
-categories = ["Spoken English", "Spoken Hindi", "Abacus", "Typing", "Computer", "Tailoring", "Dance"]
+categories = [ "Spoken English", "Spoken Hindi", "Abacus", "Typing", "Computer", "Tailoring", "Dance" ]
 
-learning_centers = {
-    "Spoken English": [
-        {"name": "Saraswathi Spoken English", "address": "Main Rd, Komarapalayam", "rating": 4.7, "detail": "Grammar, Vocabulary, and Communication"},
-        {"name": "Vijay English Academy", "address": "Near Bus Stand, Komarapalayam", "rating": 4.5, "detail": "Spoken English with practice sessions"},
-    ],
-    "Spoken Hindi": [
-        {"name": "Friends Hindi Class", "address": "South Street, Komarapalayam", "rating": 4.6, "detail": "Basic to Advanced Hindi"},
-        {"name": "Ravi’s Hindi Tuition", "address": "4th Cross, Namakkal", "rating": 4.4, "detail": "Speaking and writing Hindi"},
-    ],
-    "Abacus": [
-        {"name": "Golden Beads Abacus", "address": "MG Road, Komarapalayam", "rating": 4.8, "detail": "Mental math and speed calculation"},
-        {"name": "Kids Brain Abacus", "address": "School St, Komarapalayam", "rating": 4.5, "detail": "Junior and Senior abacus levels"},
-    ],
-    "Typing": [
-        {"name": "Brilliant Typewriting", "address": "Anangur Rd, Komarapalayam", "rating": 4.8, "detail": "Tamil & English typing"},
-        {"name": "Rasi Type Institute", "address": "Old Bus Stand, Komarapalayam", "rating": 4.6, "detail": "Govt typing exam focused"},
-    ],
-    "Computer": [
-        {"name": "CSC Computer Education", "address": "Market Rd, Komarapalayam", "rating": 4.7, "detail": "Basic, Tally, DTP, C, C++"},
-        {"name": "Apollo Computer", "address": "New Colony, Komarapalayam", "rating": 4.6, "detail": "MS Office, Web Design"},
-    ],
-    "Tailoring": [
-        {"name": "Agam Tailoring Institute", "address": "Komarapalayam Main Rd", "rating": 4.9, "detail": "Blouse, Chudidar, Aari work"},
-        {"name": "Selvi Tailoring", "address": "East Street, Namakkal", "rating": 4.5, "detail": "Women’s tailoring with kit"},
-    ],
-    "Dance": [
-        {"name": "Senz X Dance Studio", "address": "Komarapalayam Bus Stand", "rating": 4.8, "detail": "Western & Classical dance"},
-        {"name": "Pranava Dance School", "address": "Near Govt School, Komarapalayam", "rating": 4.7, "detail": "Bharatanatyam, Cinematic"},
-    ]
-}
+locations = [ "All", "Komarapalayam", "Erode", "Bhavani" ]
 
-st.title("📚 Affordable Learning Centers")
-st.write("Select a category to see classes:")
+learning_centers = { "Spoken English": [ {"name": "Flora Academy", "address": "1st Floor, Pallipalayam Corner, SK Dental Hospital Complex, Minmini Fancy Backside, Komarapalayam–Thiruchengode Road, Tamil Nadu", "rating": "5.0", "detail": "They teach Hindi in a better, simple-to-understand way."}, {"name": "Vinayak Spoken Hindi", "address": "Komarapalayam, Tamil Nadu", "rating": "4.9", "detail": "This training institute is great for learning spoken Hindi. Also teaches spoken English."}, {"name": "Pioneer Academy", "address": "2/48-5, Santhapuri Nagar, Alakakattivalasu, Komarapalayam, Tiruchengode Road, Namakkal District", "rating": "4.9", "detail": "Teaches spoken English & Hindi, abacus, TNPSC coaching, typing, tailoring, silambam, and more."}, {"name": "Kathirvel Hindi Tuition", "address": "Near Sriram Maligai Store, West Colony, Vijayathottam, Komarapalayam", "rating": "N/A", "detail": "Offers Hindi tuition. Also teaches spoken English."} ], "Spoken Hindi": [], "Abacus": [ {"name": "Pioneer Academy", "address": "2/48-5, Santhapuri Nagar, Alakakattivalasu, Komarapalayam, Tiruchengode Road, Namakkal District", "rating": "4.9", "detail": "Offers abacus, TNPSC, silambam, tailoring, typing, spoken English/Hindi."}, {"name": "Indian Abacus Centre", "address": "Karungalpalayam, Erode, Tamil Nadu", "rating": "4.9", "detail": "Also teaches handwriting, calligraphy, spoken Tamil, and spoken English."}, {"name": "SIP Abacus", "address": "Gandhiji Street, Kollampalayam, Erode, Tamil Nadu", "rating": "4.9", "detail": "A well-known abacus learning center."}, {"name": "Agam Academy", "address": "Vellusamy Street, Manickampalayam, Erode, Tamil Nadu", "rating": "4.9", "detail": "Offers abacus and other skill development classes."}, {"name": "Golden Buds Abacus Academy", "address": "149/320, Valayakara Street, Erode, Tamil Nadu", "rating": "5.0", "detail": "Abacus classes for kids. Focused on mental math training."} ], "Typing": [ {"name": "Brilliant Typewriting Class", "address": "284F, Anangur Road, Opp. Salem Main Road, Komarapalayam, Tamil Nadu", "rating": "N/A", "detail": ""}, {"name": "Pioneer Academy", "address": "2/48-5, Santhapuri Nagar, Alakakattivalasu, Komarapalayam, Tiruchengode Road, Namakkal District", "rating": "4.9", "detail": "Also teaches typing and other courses."} ], "Computer": [ {"name": "CSC Computer Education", "address": "Vasavi Complex, Natraja Nagar, Komarapalayam, Tamil Nadu", "rating": "4.8", "detail": "Offers computer basics, MS Office, internet training."}, {"name": "IFC Infotech Computer Education", "address": "Bus Stand, T.R. Complex, Salem Main Road, Komarapalayam, Tamil Nadu", "rating": "5.0", "detail": "Offers hardware, software, multimedia, and general computer education."}, {"name": "Pioneer Academy", "address": "2/48-5, Santhapuri Nagar, Alakakattivalasu, Komarapalayam, Tiruchengode Road, Namakkal District", "rating": "4.9", "detail": "Offers computer, typing, abacus, tailoring, etc."} ], "Tailoring": [ {"name": "Anubi Designing Institute & Studio", "address": "KS Bungalow Line, East Colony, Komarapalayam, Tamil Nadu – 638183", "rating": "5.0", "detail": "9 reviews"}, {"name": "Aparnaa Costume Designer & Training Institute", "address": "PPT Towers, 48/1B, Chinnamuthu Main Street, Nasiyanur Rd, near Edayankattuvalasu Govt. School, Erode, TN – 638011", "rating": "4.9", "detail": "692 reviews"}, {"name": "Apurvaa Fashion Tailoring & Beautician Training Institute", "address": "4, SKC Road, Brough Rd, Erode, Tamil Nadu – 638001", "rating": "5.0", "detail": "831 reviews"}, {"name": "Janani Designers", "address": "Komarapalayam, Tamil Nadu", "rating": "4.8", "detail": "19 reviews"}, {"name": "BE Relax Tailoring", "address": "Thoppur–Mettur Dam–Bhavani–Erode Rd, Bhavani, Tamil Nadu – 638301", "rating": "4.5", "detail": "11 reviews"}, {"name": "Agni Poo Costume Designer & Tailoring Institute", "address": "Cinnanapa Layout, KSE Complex, Opp. PGR Hospital, Bhavani, Tamil Nadu – 638301", "rating": "5.0", "detail": "20 reviews"}, {"name": "Aarah Aari & Tailoring Institute", "address": "Near Mettupalani Andavar Kovil, Lakshmi Nagar, KK Nagar, Kalingarayanpalayam, Bhavani, Tamil Nadu – 638316", "rating": "5.0", "detail": "5 reviews"} ], "Dance": [ {"name": "Senz X Dance Class", "address": "Pallipalayam–Kumarapalayam Road, Apex Colony, Komarapalayam", "rating": "4.8", "detail": ""}, {"name": "Maaran Dance Studio", "address": "Salem Main Road, Opp. State Bank of India, Komarapalayam", "rating": "5.0", "detail": ""}, {"name": "Dance Dreamers", "address": "294/5, Kongu Finance Upstairs, Opp. Salem Main Road, Near Saravana Theatre Bus Stop, Komarapalayam", "rating": "5.0", "detail": ""} ] }
 
-category = st.selectbox("Choose a Category", categories)
+st.title("📚 Affordable Learning Centers") st.write("Select a category and location to see available classes:")
 
-if category:
-    centers = learning_centers.get(category, [])
-    for center in centers:
-        st.markdown(f"🏫 **{center['name']}**")
-        st.markdown(f"📍 Address: {center['address']}")
-        st.markdown(f"⭐ Rating: {center['rating']}")
-        st.markdown(f"📝 {center['detail']}")
-        st.markdown("---")
+category = st.selectbox("Choose a Category", categories) location = st.selectbox("Filter by Location", locations)
+
+if category: filtered_centers = learning_centers.get(category, []) if location != "All": filtered_centers = [center for center in filtered_centers if location.lower() in center['address'].lower()]
+
+for center in filtered_centers:
+    st.subheader(f"🏫 {center['name']}")
+    st.write(f"📍 Address: {center['address']}")
+    st.write(f"⭐ Rating: {center['rating']}")
+    if center['detail']:
+        st.write(f"📝 {center['detail']}")
+    st.markdown("---")
+
 
 
 
