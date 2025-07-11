@@ -1,105 +1,64 @@
-import streamlit as st import pandas as pd
+import streamlit as st
 
----------------------- Data ----------------------
+--- Data ---
 
-data = [ # Spoken English & Hindi {"name": "Flora Academy", "category": "Spoken Hindi", "location": "Komarapalayam", "rating": 5.0, "details": "They teach Hindi in a better, simple-to-understand way.", "icon": "🗣️"},
+categories = [ "Spoken English", "Spoken Hindi", "Abacus", "Typing", "Computer", "Tailoring", "Dance" ]
 
-{"name": "Vinayak Spoken Hindi", "category": "Spoken Hindi", "location": "Komarapalayam", "rating": 4.9,
- "details": "Great for learning spoken Hindi. Also teaches spoken English.",
- "icon": "🗣️"},
+learning_centers = { "Spoken English": [ {"name": "Flora Academy", "address": "Komarapalayam", "rating": 5.0, "desc": "இங்கே இந்தி மொழியை எளிதாக கற்றுக்கொள்ளலாம்."}, {"name": "Vinayak Spoken Hindi", "address": "Komarapalayam", "rating": 4.9, "desc": "இந்தி மற்றும் ஆங்கிலம் பேச கற்பிக்கின்றனர்."}, {"name": "Pioneer Academy", "address": "Komarapalayam", "rating": 4.9, "desc": "Spoken English, Hindi, abacus, typing, tailoring, silambam போன்றவை கற்பிக்கின்றனர்."}, {"name": "Kathirvel Hindi Tuition", "address": "Komarapalayam", "rating": "N/A", "desc": "இந்தி மற்றும் ஆங்கிலம் பேச கற்பிக்கின்றனர்."}, ], "Spoken Hindi": [ {"name": "Flora Academy", "address": "Komarapalayam", "rating": 5.0, "desc": "இங்கே இந்தி மொழியை எளிதாக கற்றுக்கொள்ளலாம்."}, {"name": "Vinayak Spoken Hindi", "address": "Komarapalayam", "rating": 4.9, "desc": "இந்தி மற்றும் ஆங்கிலம் பேச கற்பிக்கின்றனர்."}, {"name": "Pioneer Academy", "address": "Komarapalayam", "rating": 4.9, "desc": "Spoken English, Hindi, abacus, typing, tailoring, silambam போன்றவை கற்பிக்கின்றனர்."}, {"name": "Kathirvel Hindi Tuition", "address": "Komarapalayam", "rating": "N/A", "desc": "இந்தி மற்றும் ஆங்கிலம் பேச கற்பிக்கின்றனர்."}, ], "Abacus": [ {"name": "Pioneer Academy", "address": "Komarapalayam", "rating": 4.9, "desc": "Abacus, tailoring, typing, spoken English/Hindi ஆகியவை கற்பிக்கின்றனர்."}, {"name": "Indian Abacus Centre", "address": "Erode", "rating": 4.9, "desc": "Handwriting, spoken Tamil, spoken English ஆகியவை கூட சேர்த்து கற்பிக்கின்றனர்."}, {"name": "SIP Abacus", "address": "Erode", "rating": 4.9, "desc": "அபாக்கஸ் பயிற்சி"}, {"name": "Agam Academy", "address": "Erode", "rating": 4.9, "desc": "Skill development classes உடன் abacus பயிற்சி"}, {"name": "Golden Buds Abacus Academy", "address": "Erode", "rating": 5.0, "desc": "மனித மெமரி மேம்பாட்டிற்கான பயிற்சி"}, ], "Typing": [ {"name": "Brilliant Typewriting Class", "address": "Komarapalayam", "rating": "N/A", "desc": "தமிழ் & ஆங்கில டைப்பிங்"}, {"name": "Pioneer Academy", "address": "Komarapalayam", "rating": 4.9, "desc": "Typing உடன் spoken & tailoring கற்றுத்தரப்படுகின்றது"}, ], "Computer": [ {"name": "CSC Computer Education", "address": "Komarapalayam", "rating": 4.8, "desc": "MS Office, internet, basics பயிற்சி"}, {"name": "IFC Infotech", "address": "Komarapalayam", "rating": 5.0, "desc": "Hardware, software, multimedia போன்றவை கற்பிக்கின்றனர்"}, {"name": "Pioneer Academy", "address": "Komarapalayam", "rating": 4.9, "desc": "Computer, typing, tailoring போன்றவை கற்பிக்கின்றனர்"}, ], "Tailoring": [ {"name": "Anubi Designing Institute", "address": "Komarapalayam", "rating": 5.0, "desc": "Tailoring மற்றும் Design பயிற்சி"}, {"name": "Aparnaa Costume Designer", "address": "Erode", "rating": 4.9, "desc": "Tailoring மற்றும் Costume design"}, {"name": "Apurvaa Fashion Institute", "address": "Erode", "rating": 5.0, "desc": "Tailoring மற்றும் Beautician"}, {"name": "Janani Designers", "address": "Komarapalayam", "rating": 4.8, "desc": "Tailoring பயிற்சி"}, {"name": "BE Relax Tailoring", "address": "Bhavani", "rating": 4.5, "desc": "Tailoring பயிற்சி"}, {"name": "Agni Poo Tailoring Institute", "address": "Bhavani", "rating": 5.0, "desc": "Tailoring பயிற்சி"}, {"name": "Aarah Aari Institute", "address": "Bhavani", "rating": 5.0, "desc": "Aari work & tailoring"}, ], "Dance": [ {"name": "Senz X Dance Class", "address": "Komarapalayam", "rating": 4.8, "desc": "Dance for kids and adults"}, {"name": "Maaran Dance Studio", "address": "Komarapalayam", "rating": 5.0, "desc": "Dance class with practice stage"}, {"name": "Dance Dreamers", "address": "Komarapalayam", "rating": 5.0, "desc": "Dance training for all age groups"}, ] }
 
-{"name": "Pioneer Academy", "category": "Spoken English", "location": "Komarapalayam", "rating": 4.9,
- "details": "Teaches English, Hindi, abacus, TNPSC, typing, tailoring, silambam.",
- "icon": "🗣️"},
+--- UI ---
 
-{"name": "Kathirvel Hindi Tuition", "category": "Spoken Hindi", "location": "Komarapalayam", "rating": None,
- "details": "Offers Hindi tuition. Also teaches spoken English.",
- "icon": "🗣️"},
+st.title("📚 மலிவு தரமான கற்றல் நிலையங்கள்") st.write("வகையைத் தேர்ந்தெடுத்து இடங்களை பாருங்கள்:")
 
-# Abacus
-{"name": "Indian Abacus Centre", "category": "Abacus", "location": "Erode", "rating": 4.9,
- "details": "Handwriting, calligraphy, spoken Tamil/English.",
- "icon": "🧮"},
+category = st.selectbox("வகை தேர்வு செய்யவும்", categories) search_query = st.text_input("🔍 பெயர் அல்லது விளக்கம் மூலம் தேடுங்கள்") location_filter = st.text_input("📍 இடம் (எ.கா., Komarapalayam)")
 
-{"name": "SIP Abacus", "category": "Abacus", "location": "Erode", "rating": 4.9,
- "details": "Well-known abacus center.",
- "icon": "🧮"},
+if category: results = learning_centers.get(category, [])
 
-{"name": "Agam Academy", "category": "Abacus", "location": "Erode", "rating": 4.9,
- "details": "Abacus and skill development.",
- "icon": "🧮"},
+# Apply search and location filter
+if search_query:
+    results = [c for c in results if search_query.lower() in c["name"].lower() or search_query.lower() in c["desc"].lower()]
+if location_filter:
+    results = [c for c in results if location_filter.lower() in c["address"].lower()]
 
-{"name": "Golden Buds Abacus Academy", "category": "Abacus", "location": "Erode", "rating": 5.0,
- "details": "Mental math training.",
- "icon": "🧮"},
+for center in results:
+    st.subheader(f"🏫 {center['name']}")
+    st.write(f"📍 முகவரி: {center['address']}")
+    st.write(f"⭐ மதிப்பீடு: {center['rating']}")
+    st.write(f"📝 விவரம்: {center['desc']}")
 
-# Typewriting
-{"name": "Brilliant Typewriting Class", "category": "Typing", "location": "Komarapalayam", "rating": None,
- "details": "Typewriting classes.", "icon": "🔠"},
+else: st.warning("முதலில் ஒரு வகையை தேர்ந்தெடுக்கவும்.")
 
-# Computer
-{"name": "CSC Computer Education", "category": "Computer", "location": "Komarapalayam", "rating": 4.8,
- "details": "Computer basics, MS Office, Internet.", "icon": "💻"},
+import streamlit as st
 
-{"name": "IFC Infotech", "category": "Computer", "location": "Komarapalayam", "rating": 5.0,
- "details": "Hardware, software, multimedia.", "icon": "💻"},
+--- Data ---
 
-# Tailoring
-{"name": "Anubi Designing Institute", "category": "Tailoring", "location": "Komarapalayam", "rating": 5.0,
- "details": "Designing & tailoring training.", "icon": "🧵"},
+categories = [ "Spoken English", "Spoken Hindi", "Abacus", "Typing", "Computer", "Tailoring", "Dance" ]
 
-{"name": "Janani Designers", "category": "Tailoring", "location": "Komarapalayam", "rating": 4.8,
- "details": "Tailoring services.", "icon": "🧵"},
+learning_centers = { "Spoken English": [ {"name": "Flora Academy", "address": "Komarapalayam", "rating": 5.0, "desc": "இங்கே இந்தி மொழியை எளிதாக கற்றுக்கொள்ளலாம்."}, {"name": "Vinayak Spoken Hindi", "address": "Komarapalayam", "rating": 4.9, "desc": "இந்தி மற்றும் ஆங்கிலம் பேச கற்பிக்கின்றனர்."}, {"name": "Pioneer Academy", "address": "Komarapalayam", "rating": 4.9, "desc": "Spoken English, Hindi, abacus, typing, tailoring, silambam போன்றவை கற்பிக்கின்றனர்."}, {"name": "Kathirvel Hindi Tuition", "address": "Komarapalayam", "rating": "N/A", "desc": "இந்தி மற்றும் ஆங்கிலம் பேச கற்பிக்கின்றனர்."}, ], "Spoken Hindi": [ {"name": "Flora Academy", "address": "Komarapalayam", "rating": 5.0, "desc": "இங்கே இந்தி மொழியை எளிதாக கற்றுக்கொள்ளலாம்."}, {"name": "Vinayak Spoken Hindi", "address": "Komarapalayam", "rating": 4.9, "desc": "இந்தி மற்றும் ஆங்கிலம் பேச கற்பிக்கின்றனர்."}, {"name": "Pioneer Academy", "address": "Komarapalayam", "rating": 4.9, "desc": "Spoken English, Hindi, abacus, typing, tailoring, silambam போன்றவை கற்பிக்கின்றனர்."}, {"name": "Kathirvel Hindi Tuition", "address": "Komarapalayam", "rating": "N/A", "desc": "இந்தி மற்றும் ஆங்கிலம் பேச கற்பிக்கின்றனர்."}, ], "Abacus": [ {"name": "Pioneer Academy", "address": "Komarapalayam", "rating": 4.9, "desc": "Abacus, tailoring, typing, spoken English/Hindi ஆகியவை கற்பிக்கின்றனர்."}, {"name": "Indian Abacus Centre", "address": "Erode", "rating": 4.9, "desc": "Handwriting, spoken Tamil, spoken English ஆகியவை கூட சேர்த்து கற்பிக்கின்றனர்."}, {"name": "SIP Abacus", "address": "Erode", "rating": 4.9, "desc": "அபாக்கஸ் பயிற்சி"}, {"name": "Agam Academy", "address": "Erode", "rating": 4.9, "desc": "Skill development classes உடன் abacus பயிற்சி"}, {"name": "Golden Buds Abacus Academy", "address": "Erode", "rating": 5.0, "desc": "மனித மெமரி மேம்பாட்டிற்கான பயிற்சி"}, ], "Typing": [ {"name": "Brilliant Typewriting Class", "address": "Komarapalayam", "rating": "N/A", "desc": "தமிழ் & ஆங்கில டைப்பிங்"}, {"name": "Pioneer Academy", "address": "Komarapalayam", "rating": 4.9, "desc": "Typing உடன் spoken & tailoring கற்றுத்தரப்படுகின்றது"}, ], "Computer": [ {"name": "CSC Computer Education", "address": "Komarapalayam", "rating": 4.8, "desc": "MS Office, internet, basics பயிற்சி"}, {"name": "IFC Infotech", "address": "Komarapalayam", "rating": 5.0, "desc": "Hardware, software, multimedia போன்றவை கற்பிக்கின்றனர்"}, {"name": "Pioneer Academy", "address": "Komarapalayam", "rating": 4.9, "desc": "Computer, typing, tailoring போன்றவை கற்பிக்கின்றனர்"}, ], "Tailoring": [ {"name": "Anubi Designing Institute", "address": "Komarapalayam", "rating": 5.0, "desc": "Tailoring மற்றும் Design பயிற்சி"}, {"name": "Aparnaa Costume Designer", "address": "Erode", "rating": 4.9, "desc": "Tailoring மற்றும் Costume design"}, {"name": "Apurvaa Fashion Institute", "address": "Erode", "rating": 5.0, "desc": "Tailoring மற்றும் Beautician"}, {"name": "Janani Designers", "address": "Komarapalayam", "rating": 4.8, "desc": "Tailoring பயிற்சி"}, {"name": "BE Relax Tailoring", "address": "Bhavani", "rating": 4.5, "desc": "Tailoring பயிற்சி"}, {"name": "Agni Poo Tailoring Institute", "address": "Bhavani", "rating": 5.0, "desc": "Tailoring பயிற்சி"}, {"name": "Aarah Aari Institute", "address": "Bhavani", "rating": 5.0, "desc": "Aari work & tailoring"}, ], "Dance": [ {"name": "Senz X Dance Class", "address": "Komarapalayam", "rating": 4.8, "desc": "Dance for kids and adults"}, {"name": "Maaran Dance Studio", "address": "Komarapalayam", "rating": 5.0, "desc": "Dance class with practice stage"}, {"name": "Dance Dreamers", "address": "Komarapalayam", "rating": 5.0, "desc": "Dance training for all age groups"}, ] }
 
-# Dance
-{"name": "Senz X Dance Class", "category": "Dance", "location": "Komarapalayam", "rating": 4.8,
- "details": "Dance classes for all ages.", "icon": "💃"},
+--- UI ---
 
-{"name": "Maaran Dance Studio", "category": "Dance", "location": "Komarapalayam", "rating": 5.0,
- "details": "Professional dance studio.", "icon": "💃"},
+st.title("📚 மலிவு தரமான கற்றல் நிலையங்கள்") st.write("வகையைத் தேர்ந்தெடுத்து இடங்களை பாருங்கள்:")
 
-{"name": "Dance Dreamers", "category": "Dance", "location": "Komarapalayam", "rating": 5.0,
- "details": "Creative dance space.", "icon": "💃"},
+category = st.selectbox("வகை தேர்வு செய்யவும்", categories) search_query = st.text_input("🔍 பெயர் அல்லது விளக்கம் மூலம் தேடுங்கள்") location_filter = st.text_input("📍 இடம் (எ.கா., Komarapalayam)")
 
-]
+if category: results = learning_centers.get(category, [])
 
----------------------- App ----------------------
+# Apply search and location filter
+if search_query:
+    results = [c for c in results if search_query.lower() in c["name"].lower() or search_query.lower() in c["desc"].lower()]
+if location_filter:
+    results = [c for c in results if location_filter.lower() in c["address"].lower()]
 
-st.set_page_config(page_title="Affordable Learning Centers", layout="centered") st.title("📚 Affordable Learning & Training Centers")
+for center in results:
+    st.subheader(f"🏫 {center['name']}")
+    st.write(f"📍 முகவரி: {center['address']}")
+    st.write(f"⭐ மதிப்பீடு: {center['rating']}")
+    st.write(f"📝 விவரம்: {center['desc']}")
 
-Convert to DataFrame
+else: st.warning("முதலில் ஒரு வகையை தேர்ந்தெடுக்கவும்.")
 
-df = pd.DataFrame(data)
 
----------------------- Filters ----------------------
-
-categories = sorted(df["category"].unique()) locations = sorted(df["location"].unique())
-
-col1, col2, col3 = st.columns([2, 2, 2])
-
-with col1: selected_category = st.selectbox("📘 Select Category", ["All"] + categories)
-
-with col2: selected_location = st.selectbox("📍 Select Location", ["All"] + locations)
-
-with col3: sort_option = st.selectbox("🔽 Sort by Rating", ["Default", "Highest to Lowest"])
-
-search_term = st.text_input("🔎 Search by Center Name")
-
----------------------- Filter Logic ----------------------
-
-filtered = df.copy()
-
-if selected_category != "All": filtered = filtered[filtered["category"] == selected_category] if selected_location != "All": filtered = filtered[filtered["location"] == selected_location] if search_term: filtered = filtered[filtered["name"].str.contains(search_term, case=False)] if sort_option == "Highest to Lowest": filtered = filtered.sort_values(by="rating", ascending=False, na_position='last')
-
-st.markdown(f"### 🎯 {len(filtered)} centers found")
-
----------------------- Display Cards ----------------------
-
-for _, row in filtered.iterrows(): with st.container(): st.markdown(f"#### {row['icon']} {row['name']}") st.markdown(f"📍 {row['location']}") if row["rating"]: st.markdown(f"⭐ {row['rating']}") st.markdown(f"📝 {row['details']}") st.markdown("---")
-
----------------------- Footer ----------------------
-
-st.markdown("\n") st.markdown("<center><sub>Built with ❤️ by Dhaniya Sri using Streamlit</sub></center>", unsafe_allow_html=True)
 
 
 
